@@ -1,1 +1,1 @@
-"* text=auto eol=crlf" | Out-File -Encoding ascii .gitattributes
+* text=auto eol=crlf
