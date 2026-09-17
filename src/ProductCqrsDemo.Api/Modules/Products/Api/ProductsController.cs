@@ -24,4 +24,21 @@ public sealed class ProductsController : ControllerBase
         var id = await _sender.Send(command, ct);
         return CreatedAtAction(nameof(GetById), new { id }, id);
     }
+
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> Update(
+        Guid id, [FromBody] UpdateProductRequest request, CancellationToken ct)
+    {
+        await _sender.Send(new UpdateProductCommand(
+            id, request.Name, request.Description, request.Price, request.Stock), ct);
+
+        return NoContent();
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
+    {
+        await _sender.Send(new DeleteProductCommand(id), ct);
+        return NoContent();
+    }
 }
